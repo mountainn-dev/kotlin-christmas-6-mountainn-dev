@@ -2,9 +2,6 @@ package christmas.domain
 
 import christmas.InputView
 import christmas.OutputView
-import christmas.constants.Request
-import christmas.state.InputViewState.*
-import christmas.state.OutputViewState.*
 import christmas.state.EventPlannerState.*
 import java.lang.IllegalArgumentException
 
