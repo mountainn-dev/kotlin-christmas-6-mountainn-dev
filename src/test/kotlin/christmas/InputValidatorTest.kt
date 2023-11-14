@@ -11,7 +11,7 @@ class InputValidatorTest {
     @DisplayName("공백")
     fun `checkIsNotBlank 메서드 사용 시 입력값이 공백이면 예외 발생`() {
         val input = ""
-        
+
         assertThrows<IllegalArgumentException> {
             inputValidator.checkIsNotBlank(input)
         }
