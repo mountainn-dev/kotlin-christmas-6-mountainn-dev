@@ -1,7 +1,10 @@
 package christmas
 
 import christmas.domain.Order
-import christmas.domain.menu.*
+import christmas.domain.menu.Appetizer.*
+import christmas.domain.menu.MainDish.*
+import christmas.domain.menu.Dessert.*
+import christmas.domain.menu.Drink.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -15,15 +18,6 @@ class OrderTest {
     @Nested
     @DisplayName("주문 유효성")
     inner class OrderValidation {
-
-        @ParameterizedTest
-        @ValueSource(strings = ["양송이스프", "양송이 수프"])
-        @DisplayName("메뉴 이름 불일치")
-        fun `메뉴판에 없는 메뉴를 주문하는 경우 예외 발생`(menu: String) {
-            assertThrows<IllegalArgumentException> {
-                Order(menu, 1)
-            }
-        }
 
         @ParameterizedTest
         @ValueSource(ints = [0, -1])
@@ -45,6 +39,14 @@ class OrderTest {
             val order = Order(SEAFOOD_PASTA, 1)
 
             assertThat(order.total()).isEqualTo(SEAFOOD_PASTA.price)
+        }
+
+        @Test
+        @DisplayName("개수 확인")
+        fun `count 메서드 사용 시 해당 주문의 메뉴 주문 개수 반환`() {
+            val order = Order(SEAFOOD_PASTA, 2)
+
+            assertThat(order.count()).isEqualTo(2)
         }
 
         @Test
@@ -70,7 +72,7 @@ class OrderTest {
         @Test
         @DisplayName("디저트 확인")
         fun `isDessert 메서드 사용 시 해당 주문이 디저트인지 확인`() {
-            val order1 = Order(ICECREAM, 1)
+            val order1 = Order(ICE_CREAM, 1)
             val order2 = Order(TAPAS, 1)
 
             assertThat(order1.isDessert()).isEqualTo(true)
