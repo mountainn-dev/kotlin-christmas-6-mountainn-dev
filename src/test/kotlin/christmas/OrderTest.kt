@@ -13,8 +13,8 @@ import org.assertj.core.api.Assertions.assertThat
 class OrderTest {
 
     @Nested
-    @DisplayName("메뉴 유효성")
-    inner class MenuValidation {
+    @DisplayName("주문 유효성")
+    inner class OrderValidation {
 
         @ParameterizedTest
         @ValueSource(strings = ["양송이스프", "양송이 수프"])
@@ -36,8 +36,8 @@ class OrderTest {
     }
 
     @Nested
-    @DisplayName("메뉴 메서드")
-    inner class MenuMethod {
+    @DisplayName("주문 메서드")
+    inner class OrderMethod {
 
         @Test
         @DisplayName("총액 확인")
