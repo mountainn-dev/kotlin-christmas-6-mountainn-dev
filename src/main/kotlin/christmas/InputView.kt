@@ -3,11 +3,16 @@ package christmas
 import camp.nextstep.edu.missionutils.Console
 
 class InputView {
+    private val inputValidator = InputValidator()
 
-    fun readNumberWithMessage(message: String): Int {
-        println(message)
-        return readNumber()
+    fun readNumber() = validatedNumber(read())
+
+    private fun validatedNumber(input: String): Int {
+        inputValidator.checkIsNotBlank(input)
+        inputValidator.checkIsDigit(input)
+
+        return input.toInt()
     }
 
-    private fun readNumber() = Console.readLine().toInt()
+    private fun read() = Console.readLine()
 }

@@ -1,5 +1,8 @@
 package christmas
 
+import christmas.domain.EventPlanner
+
 fun main() {
-    TODO("프로그램 구현")
+    val eventPlanner = EventPlanner()
+    eventPlanner.run()
 }
