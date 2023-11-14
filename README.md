@@ -4,14 +4,16 @@
 
 - [x] 방문 날짜를 정한다.
   - [x] 방문 날짜를 입력한다. - InputView#readNumber()
-  - [x] 값이 올바르지 않은 형태일 경우, 예외가 발생하고 재입력 받는다. - EventPlanner#setValidVisitDay()
+  - [x] 값이 올바르지 않은 형태일 경우, 예외가 발생하고 재입력 받는다. - VisitDayController#setValidVisitDay()
   - [x] 방문 날짜가 평일인지, 주말인지 등을 확인할 수 있다. - VisitDay#isWeekDay(), isWeekEnd()..
   - [x] 방문 날짜가 12월 1일 로부터 며칠이 지나있는지 확인할 수 있다. - VisitDay#daySinceDecemberFirst()
-- [ ] 메뉴를 주문한다.
-  - [ ] 메뉴를 입력한다.
-  - [ ] 값이 올바르지 않은 형태일 경우, 예외가 발생하고 재입력 받는다.
-  - [ ] 주문 메뉴가 에피타이저인지, 메인 요리인지 등을 확인할 수 있다.
-  - [ ] 주문 메뉴의 금액을 확인할 수 있다.
+- [x] 메뉴를 주문한다.
+  - [x] 메뉴를 입력한다. - InputView#readWords()
+  - [x] 값이 올바르지 않은 형태일 경우, 예외가 발생하고 재입력 받는다. - OrdersController#setValidOrders()
+  - [x] 주문 메뉴가 에피타이저인지, 메인 요리인지 등을 확인할 수 있다. - Order#isAppetizer(), isMainDish()..
+  - [x] 주문 메뉴의 총 금액을 확인할 수 있다. - Order#total()
+  - [x] 주문 메뉴의 총 개수를 확인할 수 있다. - Order#Count()
+  - [x] 전체 주문의 총 금액을 확인할 수 있다. - Orders#total()
 - [ ] 방문 날짜와 주문 금액을 기반으로 각종 이벤트 정보를 종합한다.
   - [ ] 할인 기준에 알맞게 할인 금액을 계산한다.
 - [ ] 이벤트가 적용된 결과를 출력한다.
