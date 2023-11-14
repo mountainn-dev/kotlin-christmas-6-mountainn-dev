@@ -51,7 +51,7 @@ class DiscountCalculatorTest {
         @DisplayName("총 주문 금액 미달")
         fun `dDayDiscount 메서드 사용 시 총 주문 금액 10,000 원 미만인 방문 고객의 할인 금액은 0 원`() {
             val visitDay = VisitDay(1)
-            val orders = listOf(Order(ICE_CREAM, 1))
+            val orders = Orders(listOf(Order(ICE_CREAM, 1)))
 
             assertThat(discountCalculator.dDayDiscount(visitDay, orders)).isEqualTo(0)
         }
