@@ -9,6 +9,10 @@ class OutputView {
         println(Request.REQUEST_VISIT_DAY_MESSAGE)
     }
 
+    fun printOrderRequest() {
+        println(Request.REQUEST_ORDER_MESSAGE)
+    }
+
     fun printVisitDayError() {
         println(ERROR + BLANK + Exception.ERROR_VISIT_DAY_MESSAGE)
     }
