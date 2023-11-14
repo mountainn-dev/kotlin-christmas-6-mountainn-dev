@@ -24,6 +24,14 @@ class Orders(private val orders: List<Order>) {
         return totalCount <= MAX_ORDER_COUNT
     }
 
+    fun total(): Int {
+        var total = 0
+
+        orders.map { total += it.total() }
+
+        return total
+    }
+
     companion object {
         private const val MAX_ORDER_COUNT = 20
     }
