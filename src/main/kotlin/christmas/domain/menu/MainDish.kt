@@ -1,6 +1,6 @@
 package christmas.domain.menu
 
-enum class MainDish(val menuName: String, val price: Int): Orderable {
+enum class MainDish(override val menuName: String, override val price: Int): Orderable {
     T_BONE_STEAK("티본스테이크", 55000),
     BARBEQUE_RIB("바베큐립", 54000),
     SEAFOOD_PASTA("해산물파스타", 35000),

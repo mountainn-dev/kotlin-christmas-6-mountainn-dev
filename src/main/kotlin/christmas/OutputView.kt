@@ -17,6 +17,10 @@ class OutputView {
         println(ERROR + BLANK + Exception.ERROR_VISIT_DAY_MESSAGE)
     }
 
+    fun printOrderError() {
+        println(ERROR + BLANK + Exception.ERROR_ORDER_MESSAGE)
+    }
+
     companion object {
         private const val ERROR = "[ERROR]"
         private const val BLANK = " "

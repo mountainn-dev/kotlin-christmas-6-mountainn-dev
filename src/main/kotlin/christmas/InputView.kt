@@ -18,10 +18,16 @@ class InputView {
 
     private fun validatedWords(input: String): List<String> {
         inputValidator.checkIsNotBlank(input)
-        inputValidator.checkHasCommaSeparator(input)
-
-        return input.split(",")
+        if (inputValidator.isMultipleWords(input)) {
+            inputValidator.checkHasCommaSeparator(input)
+            return input.split(COMMA)
+        }
+        return listOf(input)
     }
 
     private fun read() = Console.readLine()
+
+    companion object {
+        private const val COMMA = ","
+    }
 }
