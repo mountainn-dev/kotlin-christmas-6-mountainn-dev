@@ -1,4 +1,5 @@
 package christmas.constants
 
-object Constants {
+object ExceptionMessage {
+
 }
