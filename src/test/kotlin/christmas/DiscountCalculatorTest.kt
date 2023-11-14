@@ -59,13 +59,11 @@ class DiscountCalculatorTest {
     @Nested
     @DisplayName("평일 할인")
     inner class WeekDayDiscount {
-        private val weekDay = Calendar.WEEKDAY.days.first()
-        private val weekEnd = Calendar.WEEKEND.days.first()
 
         @Test
         @DisplayName("디저트 1개")
         fun `weekDayDiscount 메서드 사용 시 총 주문의 디저트가 1 개인 평일 방문 고객의 할인 금액은 2023 원`() {
-            val visitDay = VisitDay(weekDay)
+            val visitDay = VisitDay(WEEK_DAY)
             val orders = listOf(Order(Dessert.ICECREAM, 1), Order(MainDish.SEAFOOD_PASTA, 1))
 
             assertThat(discountCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(WEEK_DAY_DISCOUNT)
@@ -74,7 +72,7 @@ class DiscountCalculatorTest {
         @Test
         @DisplayName("디저트 없음")
         fun `weekDayDiscount 메서드 사용 시 디저트를 주문하지 않은 평일 방문 고객의 할인 금액은 0 원`() {
-            val visitDay = VisitDay(weekDay)
+            val visitDay = VisitDay(WEEK_DAY)
             val orders = listOf(Order(MainDish.SEAFOOD_PASTA, 1))
 
             assertThat(discountCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(0)
@@ -83,7 +81,7 @@ class DiscountCalculatorTest {
         @Test
         @DisplayName("평일 이외 방문")
         fun `weekDayDiscount 메서드 사용 시 평일 이외 방문 고객의 할인 금액은 0 원`() {
-            val visitDay = VisitDay(weekEnd)
+            val visitDay = VisitDay(WEEK_END)
             val orders = listOf(Order(Dessert.ICECREAM, 1), Order(MainDish.SEAFOOD_PASTA, 1))
 
             assertThat(discountCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(0)
@@ -92,7 +90,7 @@ class DiscountCalculatorTest {
         @Test
         @DisplayName("총 주문 금액 미달")
         fun `weekDayDiscount 메서드 사용 시 주문 금액이 10,000 원 미만인 방문 고객의 할인 금액은 0 원`() {
-            val visitDay = VisitDay(weekEnd)
+            val visitDay = VisitDay(WEEK_DAY)
             val orders = listOf(Order(Dessert.ICECREAM, 1))
 
             assertThat(discountCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(0)
@@ -102,13 +100,11 @@ class DiscountCalculatorTest {
     @Nested
     @DisplayName("주말 할인")
     inner class WeekEndDiscount {
-        private val weekEnd = Calendar.WEEKEND.days.first()
-        private val weekDay = Calendar.WEEKDAY.days.first()
 
         @Test
         @DisplayName("메인 요리 1개")
         fun `weekEndDiscount 메서드 사용 시 총 주문의 메인 요리가 1 개인 주말 방문 고객의 할인 금액은 2023 원`() {
-            val visitDay = VisitDay(weekEnd)
+            val visitDay = VisitDay(WEEK_END)
             val orders = listOf(Order(Dessert.ICECREAM, 1), Order(MainDish.SEAFOOD_PASTA, 1))
 
             assertThat(discountCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(WEEK_END_DISCOUNT)
@@ -117,7 +113,7 @@ class DiscountCalculatorTest {
         @Test
         @DisplayName("메인 요리 없음")
         fun `weekEndDiscount 메서드 사용 시 메인 요리를 주문하지 않은 주말 방문 고객의 할인 금액은 0 원`() {
-            val visitDay = VisitDay(weekEnd)
+            val visitDay = VisitDay(WEEK_END)
             val orders = listOf(Order(Appetizer.TAPAS, 2), Order(Dessert.ICECREAM, 1))
 
             assertThat(discountCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(0)
@@ -126,7 +122,7 @@ class DiscountCalculatorTest {
         @Test
         @DisplayName("주말 이외 방문")
         fun `weekEndDiscount 메서드 사용 시 주말 이외 방문 고객의 할인 금액은 0 원`() {
-            val visitDay = VisitDay(weekDay)
+            val visitDay = VisitDay(WEEK_DAY)
             val orders = listOf(Order(Dessert.ICECREAM, 1), Order(MainDish.SEAFOOD_PASTA, 1))
 
             assertThat(discountCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(0)
@@ -136,22 +132,20 @@ class DiscountCalculatorTest {
     @Nested
     @DisplayName("특별 할인")
     inner class SpecialDayDiscount {
-        private val holiday = Calendar.HOLIDAY.days.first()
-        private val weekDay = Calendar.WEEKDAY.days.first()
 
         @Test
-        @DisplayName("공휴일 방문")
-        fun `specialDayDiscount 메서드 사용 시 공휴일 방문 고객의 할인 금액은 1,000 원`() {
-            val visitDay = VisitDay(holiday)
+        @DisplayName("특별일 방문")
+        fun `specialDayDiscount 메서드 사용 시 특별일 방문 고객의 할인 금액은 1,000 원`() {
+            val visitDay = VisitDay(SPECIAL_DAY)
             val orders = listOf(Order(Appetizer.TAPAS, 2), Order(Dessert.ICECREAM, 1))
 
             assertThat(discountCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(SPECIAL_DAY_DISCOUNT)
         }
 
         @Test
-        @DisplayName("공휴일 이외 방문")
-        fun `specialDayDiscount 메서드 사용 시 공휴일 이외 방문 고객의 할인 금액은 0 원`() {
-            val visitDay = VisitDay(weekDay)
+        @DisplayName("특별일 이외 방문")
+        fun `specialDayDiscount 메서드 사용 시 특별일 이외 방문 고객의 할인 금액은 0 원`() {
+            val visitDay = VisitDay(WEEK_END)
             val orders = listOf(Order(Appetizer.TAPAS, 2), Order(Dessert.ICECREAM, 1))
 
             assertThat(discountCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(0)
@@ -160,7 +154,7 @@ class DiscountCalculatorTest {
         @Test
         @DisplayName("총 주문 금액 미달")
         fun `specialDayDiscount 메서드 사용 시 주문 금액이 10,000 원 미만인 방문 고객의 할인 금액은 0 원`() {
-            val visitDay = VisitDay(holiday)
+            val visitDay = VisitDay(SPECIAL_DAY)
             val orders = listOf(Order(Dessert.ICECREAM, 1))
 
             assertThat(discountCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(0)
@@ -171,5 +165,8 @@ class DiscountCalculatorTest {
         private const val WEEK_DAY_DISCOUNT = 2023
         private const val WEEK_END_DISCOUNT = 2023
         private const val SPECIAL_DAY_DISCOUNT = 1000
+        private const val WEEK_DAY = Calendar.WEEK_DAY.days.first()
+        private const val WEEK_END = Calendar.WEEK_END.days.first()
+        private const val SPECIAL_DAY = Calendar.SPECIAL_DAY.days.first()
     }
 }
