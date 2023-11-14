@@ -21,6 +21,10 @@ class Orders(private val orders: List<Order>) {
 
         orders.map { totalCount += it.count() }
 
-        return totalCount <= 20
+        return totalCount <= MAX_ORDER_COUNT
+    }
+
+    companion object {
+        private const val MAX_ORDER_COUNT = 20
     }
 }
