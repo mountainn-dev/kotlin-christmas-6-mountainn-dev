@@ -1,6 +1,6 @@
 package christmas.state
 
-enum class EventPlannerState {
+enum class VisitDayControllerState {
     NORMAL,
     ERROR
 }

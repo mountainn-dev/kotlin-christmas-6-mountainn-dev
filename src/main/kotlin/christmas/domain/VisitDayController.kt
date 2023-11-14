@@ -2,20 +2,18 @@ package christmas.domain
 
 import christmas.InputView
 import christmas.OutputView
-import christmas.state.EventPlannerState.*
+import christmas.state.VisitDayControllerState.*
 import java.lang.IllegalArgumentException
 
-class EventPlanner {
+class VisitDayController {
     private val inputView = InputView()
     private val outputView = OutputView()
-    private var eventPlannerState = NORMAL
+    private var controllerState = NORMAL
     private lateinit var visitDay: VisitDay
 
-    fun run() {
-        selectVisitDay()
-    }
+    fun getVisitDay() = this.visitDay
 
-    private fun selectVisitDay() {
+    fun selectVisitDay() {
         outputView.printVisitDayRequest()
 
         setValidVisitDay()
@@ -24,18 +22,18 @@ class EventPlanner {
     private fun setValidVisitDay() {
         do {
             setVisitDay()
-        } while (isEventPlannerOnError())
+        } while (isControllerOnError())
     }
 
     private fun setVisitDay() {
         try {
             visitDay = VisitDay(inputView.readNumber())
-            eventPlannerState = NORMAL
+            controllerState = NORMAL
         } catch (e: IllegalArgumentException) {
             outputView.printVisitDayError()
-            eventPlannerState = ERROR
+            controllerState = ERROR
         }
     }
 
-    private fun isEventPlannerOnError() = eventPlannerState == ERROR
+    private fun isControllerOnError() = controllerState == ERROR
 }
