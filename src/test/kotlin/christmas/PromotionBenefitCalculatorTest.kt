@@ -172,10 +172,10 @@ class PromotionBenefitCalculatorTest {
     inner class Freebie {
         @Test
         @DisplayName("기준 금액 달성")
-        fun `champagneFreebie 메서드 사용 시 주문 금액이 120,000 원 이상인 방문 고객의 경우 증정 가격은 샴페인 가격`() {
+        fun `champagneFreebie 메서드 사용 시 주문 금액이 120,000 원 이상인 방문 고객의 경우 증정 가격은 증정품 총 가격`() {
             val orders = Orders(listOf(Order(SEAFOOD_PASTA, 5)))
 
-            assertThat(promotionBenefitCalculator.champagneFreebie(orders)).isEqualTo(CHAMPAGNE.price)
+            assertThat(promotionBenefitCalculator.champagneFreebie(orders)).isEqualTo(CHAMPAGNE_FREEBIE.product.total())
         }
 
         @Test

@@ -48,7 +48,7 @@ class PromotionBenefitCalculator {
     fun champagneFreebie(orders: Orders): Int {
         if (!satisfyChampagneFreebieRequirements(orders)) return NO_DISCOUNT
 
-        return CHAMPAGNE_FREEBIE.product.price
+        return CHAMPAGNE_FREEBIE.product.total()
     }
 
     private fun satisfyChampagneFreebieRequirements(orders: Orders): Boolean {
