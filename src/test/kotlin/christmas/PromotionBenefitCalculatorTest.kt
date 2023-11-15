@@ -49,7 +49,7 @@ class PromotionBenefitCalculatorTest {
             val visitDay = VisitDay(26)
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(promotionBenefitCalculator.dDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
+            assertThat(promotionBenefitCalculator.dDayDiscount(visitDay, orders)).isEqualTo(ZERO)
         }
 
         @Test
@@ -58,7 +58,7 @@ class PromotionBenefitCalculatorTest {
             val visitDay = VisitDay(1)
             val orders = Orders(listOf(Order(ICE_CREAM, 1)))
 
-            assertThat(promotionBenefitCalculator.dDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
+            assertThat(promotionBenefitCalculator.dDayDiscount(visitDay, orders)).isEqualTo(ZERO)
         }
     }
 
@@ -81,7 +81,7 @@ class PromotionBenefitCalculatorTest {
             val visitDay = VisitDay(weekDay)
             val orders = Orders(listOf(Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(promotionBenefitCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
+            assertThat(promotionBenefitCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(ZERO)
         }
 
         @Test
@@ -90,7 +90,7 @@ class PromotionBenefitCalculatorTest {
             val visitDay = VisitDay(weekEnd)
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(promotionBenefitCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
+            assertThat(promotionBenefitCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(ZERO)
         }
 
         @Test
@@ -99,7 +99,7 @@ class PromotionBenefitCalculatorTest {
             val visitDay = VisitDay(weekDay)
             val orders = Orders(listOf(Order(ICE_CREAM, 1)))
 
-            assertThat(promotionBenefitCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
+            assertThat(promotionBenefitCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(ZERO)
         }
     }
 
@@ -122,7 +122,7 @@ class PromotionBenefitCalculatorTest {
             val visitDay = VisitDay(weekEnd)
             val orders = Orders(listOf(Order(TAPAS, 2), Order(ICE_CREAM, 1)))
 
-            assertThat(promotionBenefitCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
+            assertThat(promotionBenefitCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(ZERO)
         }
 
         @Test
@@ -131,7 +131,7 @@ class PromotionBenefitCalculatorTest {
             val visitDay = VisitDay(weekDay)
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(promotionBenefitCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
+            assertThat(promotionBenefitCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(ZERO)
         }
     }
 
@@ -154,7 +154,7 @@ class PromotionBenefitCalculatorTest {
             val visitDay = VisitDay(weekEnd)
             val orders = Orders(listOf(Order(TAPAS, 2), Order(ICE_CREAM, 1)))
 
-            assertThat(promotionBenefitCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
+            assertThat(promotionBenefitCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(ZERO)
         }
 
         @Test
@@ -163,7 +163,7 @@ class PromotionBenefitCalculatorTest {
             val visitDay = VisitDay(specialDay)
             val orders = Orders(listOf(Order(ICE_CREAM, 1)))
 
-            assertThat(promotionBenefitCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
+            assertThat(promotionBenefitCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(ZERO)
         }
     }
 
@@ -183,13 +183,12 @@ class PromotionBenefitCalculatorTest {
         fun `champagneFreebie 메서드 사용 시 주문 금액이 120,000 원 미만인 방문 고객의 경우 증정 가격 0 원`() {
             val orders = Orders(listOf(Order(ICE_CREAM, 10)))
 
-            assertThat(promotionBenefitCalculator.champagneFreebie(orders)).isEqualTo(NO_FREEBIE)
+            assertThat(promotionBenefitCalculator.champagneFreebie(orders)).isEqualTo(ZERO)
         }
     }
 
     companion object {
         private const val D_DAY_DISCOUNT_UNIT = 100
-        private const val NO_DISCOUNT = 0
-        private const val NO_FREEBIE = 0
+        private const val ZERO = 0
     }
 }
