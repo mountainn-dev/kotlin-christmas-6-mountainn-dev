@@ -1,7 +1,8 @@
-package christmas.domain
+package christmas.controller
 
 import christmas.InputView
 import christmas.OutputView
+import christmas.domain.VisitDay
 import christmas.state.VisitDayControllerState.*
 import java.lang.IllegalArgumentException
 

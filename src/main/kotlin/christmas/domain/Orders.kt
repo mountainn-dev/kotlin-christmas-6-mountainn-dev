@@ -32,6 +32,14 @@ class Orders(private val orders: List<Order>) {
         return total
     }
 
+    fun totalAppetizerCount() = orders.count { it.isAppetizer() }
+
+    fun totalMainDishCount() = orders.count { it.isMainDish() }
+
+    fun totalDessertCount() = orders.count { it.isDessert() }
+
+    fun totalDrinkCount() = orders.count { it.isDrink() }
+
     companion object {
         private const val MAX_ORDER_COUNT = 20
     }

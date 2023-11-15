@@ -1,8 +1,10 @@
-package christmas.domain
+package christmas.controller
 
 import christmas.InputValidator
 import christmas.InputView
 import christmas.OutputView
+import christmas.domain.Order
+import christmas.domain.Orders
 import christmas.domain.menu.*
 import christmas.state.OrdersControllerState.*
 import java.lang.IllegalArgumentException
@@ -13,6 +15,8 @@ class OrdersController {
     private var controllerState = NORMAL
     private lateinit var orders: Orders
     private lateinit var order: Order
+
+    fun getOrders() = this.orders
 
     fun order() {
         outputView.printOrderRequest()
