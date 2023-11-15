@@ -2,6 +2,7 @@ package christmas
 
 import christmas.domain.Order
 import christmas.domain.Orders
+import christmas.domain.menu.MainDish.*
 import christmas.domain.menu.Dessert.*
 import christmas.domain.menu.Drink.*
 import org.junit.jupiter.api.DisplayName
@@ -51,6 +52,22 @@ class OrdersTest {
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(ZERO_COKE, 1)))
 
             assertThat(orders.total()).isEqualTo((ICE_CREAM.price * 1) + (ZERO_COKE.price * 1))
+        }
+
+        @Test
+        @DisplayName("총 메인 요리 개수 확인")
+        fun `totalMainDishCount 메서드 사용 시 전체 주문에서 메인 요리의 개수 반환`() {
+            val orders = Orders(listOf(Order(SEAFOOD_PASTA, 5), Order(T_BONE_STEAK, 1)))
+
+            assertThat(orders.totalMainDishCount()).isEqualTo(6)
+        }
+
+        @Test
+        @DisplayName("총 디저트 개수 확인")
+        fun `totalDessertCount 메서드 사용 시 전체 주문에서 디저트의 개수 반환`() {
+            val orders = Orders(listOf(Order(ICE_CREAM, 5), Order(CHOCOLATE_CAKE, 5)))
+
+            assertThat(orders.totalDessertCount()).isEqualTo(10)
         }
     }
 }
