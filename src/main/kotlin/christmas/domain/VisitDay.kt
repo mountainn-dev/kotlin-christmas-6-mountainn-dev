@@ -8,6 +8,8 @@ class VisitDay(private val day: Int) {
         require(day in MIN_DAY_OF_MONTH..MAX_DAY_OF_MONTH)
     }
 
+    fun day() = day
+
     fun daySinceDecemberFirst() = day - DECEMBER_FIRST
 
     fun isWeekDay() = day in WEEK_DAY.days

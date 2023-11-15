@@ -48,6 +48,10 @@ class Orders(private val orders: List<Order>) {
         return count
     }
 
+    fun menuNames() = orders.map { it.menu().menuName }
+
+    fun menuCounts() = orders.map { it.count() }
+
     companion object {
         private const val MAX_ORDER_COUNT = 20
     }
