@@ -3,15 +3,18 @@ package christmas
 import christmas.domain.*
 import christmas.domain.Calendar.*
 import christmas.domain.menu.Appetizer.*
-import christmas.domain.menu.Dessert.*
 import christmas.domain.menu.MainDish.*
+import christmas.domain.menu.Dessert.*
+import christmas.domain.menu.Drink.*
+import christmas.domain.promotion.Discount.*
+import christmas.domain.promotion.Freebie.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
 
-class DiscountCalculatorTest {
-    private val discountCalculator = DiscountCalculator()
+class PromotionBenefitCalculatorTest {
+    private val promotionBenefitCalculator = PromotionBenefitCalculator()
     private val weekDay = WEEK_DAY.days.first()
     private val weekEnd = WEEK_END.days.first()
     private val specialDay = SPECIAL_DAY.days.first()
@@ -26,7 +29,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(1)
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(discountCalculator.dDayDiscount(visitDay, orders)).isEqualTo(1000)
+            assertThat(promotionBenefitCalculator.dDayDiscount(visitDay, orders)).isEqualTo(D_DAY_DISCOUNT.price)
         }
 
         @Test
@@ -35,7 +38,9 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(5)
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(discountCalculator.dDayDiscount(visitDay, orders)).isEqualTo(1400)
+            assertThat(
+                promotionBenefitCalculator.dDayDiscount(visitDay, orders)
+            ).isEqualTo(D_DAY_DISCOUNT.price + (visitDay.daySinceDecemberFirst() * D_DAY_DISCOUNT_UNIT))
         }
 
         @Test
@@ -44,7 +49,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(26)
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(discountCalculator.dDayDiscount(visitDay, orders)).isEqualTo(0)
+            assertThat(promotionBenefitCalculator.dDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
         }
 
         @Test
@@ -53,7 +58,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(1)
             val orders = Orders(listOf(Order(ICE_CREAM, 1)))
 
-            assertThat(discountCalculator.dDayDiscount(visitDay, orders)).isEqualTo(0)
+            assertThat(promotionBenefitCalculator.dDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
         }
     }
 
@@ -67,7 +72,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(weekDay)
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(discountCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(WEEK_DAY_DISCOUNT)
+            assertThat(promotionBenefitCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(WEEK_DAY_DISCOUNT.price)
         }
 
         @Test
@@ -76,7 +81,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(weekDay)
             val orders = Orders(listOf(Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(discountCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(0)
+            assertThat(promotionBenefitCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
         }
 
         @Test
@@ -85,7 +90,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(weekEnd)
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(discountCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(0)
+            assertThat(promotionBenefitCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
         }
 
         @Test
@@ -94,7 +99,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(weekDay)
             val orders = Orders(listOf(Order(ICE_CREAM, 1)))
 
-            assertThat(discountCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(0)
+            assertThat(promotionBenefitCalculator.weekDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
         }
     }
 
@@ -108,7 +113,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(weekEnd)
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(discountCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(WEEK_END_DISCOUNT)
+            assertThat(promotionBenefitCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(WEEK_END_DISCOUNT.price)
         }
 
         @Test
@@ -117,7 +122,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(weekEnd)
             val orders = Orders(listOf(Order(TAPAS, 2), Order(ICE_CREAM, 1)))
 
-            assertThat(discountCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(0)
+            assertThat(promotionBenefitCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
         }
 
         @Test
@@ -126,7 +131,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(weekDay)
             val orders = Orders(listOf(Order(ICE_CREAM, 1), Order(SEAFOOD_PASTA, 1)))
 
-            assertThat(discountCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(0)
+            assertThat(promotionBenefitCalculator.weekEndDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
         }
     }
 
@@ -140,7 +145,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(specialDay)
             val orders = Orders(listOf(Order(TAPAS, 2), Order(ICE_CREAM, 1)))
 
-            assertThat(discountCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(SPECIAL_DAY_DISCOUNT)
+            assertThat(promotionBenefitCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(SPECIAL_DAY_DISCOUNT.price)
         }
 
         @Test
@@ -149,7 +154,7 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(weekEnd)
             val orders = Orders(listOf(Order(TAPAS, 2), Order(ICE_CREAM, 1)))
 
-            assertThat(discountCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(0)
+            assertThat(promotionBenefitCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
         }
 
         @Test
@@ -158,13 +163,33 @@ class DiscountCalculatorTest {
             val visitDay = VisitDay(specialDay)
             val orders = Orders(listOf(Order(ICE_CREAM, 1)))
 
-            assertThat(discountCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(0)
+            assertThat(promotionBenefitCalculator.specialDayDiscount(visitDay, orders)).isEqualTo(NO_DISCOUNT)
+        }
+    }
+
+    @Nested
+    @DisplayName("증정 이벤트")
+    inner class Freebie {
+        @Test
+        @DisplayName("기준 금액 달성")
+        fun `champagneFreebie 메서드 사용 시 주문 금액이 120,000 원 이상인 방문 고객의 경우 증정 가격은 샴페인 가격`() {
+            val orders = Orders(listOf(Order(SEAFOOD_PASTA, 5)))
+
+            assertThat(promotionBenefitCalculator.champagneFreebie(orders)).isEqualTo(CHAMPAGNE.price)
+        }
+
+        @Test
+        @DisplayName("기준 금액 미달")
+        fun `champagneFreebie 메서드 사용 시 주문 금액이 120,000 원 미만인 방문 고객의 경우 증정 가격 0 원`() {
+            val orders = Orders(listOf(Order(ICE_CREAM, 10)))
+
+            assertThat(promotionBenefitCalculator.champagneFreebie(orders)).isEqualTo(NO_FREEBIE)
         }
     }
 
     companion object {
-        private const val WEEK_DAY_DISCOUNT = 2023
-        private const val WEEK_END_DISCOUNT = 2023
-        private const val SPECIAL_DAY_DISCOUNT = 1000
+        private const val D_DAY_DISCOUNT_UNIT = 100
+        private const val NO_DISCOUNT = 0
+        private const val NO_FREEBIE = 0
     }
 }
